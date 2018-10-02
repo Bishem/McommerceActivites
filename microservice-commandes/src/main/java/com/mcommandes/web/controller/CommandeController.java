@@ -1,10 +1,12 @@
 package com.mcommandes.web.controller;
 
 
+import com.mcommandes.beans.ExpeditionBean;
 import com.mcommandes.dao.CommandesDao;
 import com.mcommandes.model.Commande;
+import com.mcommandes.proxies.MicroserviceExpeditionProxy;
+import com.mcommandes.web.exceptions.CommandeAjoutImpossibleException;
 import com.mcommandes.web.exceptions.CommandeNotFoundException;
-import com.mcommandes.web.exceptions.ImpossibleAjouterCommandeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +20,21 @@ public class CommandeController {
     @Autowired
     CommandesDao commandesDao;
 
+	@Autowired
+	MicroserviceExpeditionProxy microserviceExpeditionProxy;
+
     @PostMapping (value = "/commandes")
     public ResponseEntity<Commande> ajouterCommande(@RequestBody Commande commande){
 
-        Commande nouvelleCommande = commandesDao.save(commande);
+	    Commande nouvelleCommande = commandesDao.save(commande);
+	    ResponseEntity<ExpeditionBean> nouvelleExpedition = microserviceExpeditionProxy.ajouterExpedition(new ExpeditionBean(commande.getId(), 0));
 
-        if(nouvelleCommande == null) throw new ImpossibleAjouterCommandeException("Impossible d'ajouter cette commande");
+	    if (nouvelleExpedition == null) {
+		    throw new CommandeAjoutImpossibleException("Impossible d'ajouter cette commande");
+	    } else {
+		    return new ResponseEntity<Commande>(commande, HttpStatus.CREATED);
+	    }
 
-        return new ResponseEntity<Commande>(commande, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/commandes/{id}")
@@ -46,6 +55,11 @@ public class CommandeController {
     @PutMapping(value = "/commandes")
     public void updateCommande(@RequestBody Commande commande) {
 
-        commandesDao.save(commande);
+	    Commande commandeModifiee = commandesDao.save(commande);
+	    Optional<ExpeditionBean> expedition = microserviceExpeditionProxy.etatExpedition(commandeModifiee.getId());
+	    if (expedition.isPresent()) {
+		    expedition.get().setEtat(1);
+		    this.microserviceExpeditionProxy.updateExpedition(expedition.get());
+	    }
     }
 }

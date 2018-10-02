@@ -9,9 +9,9 @@ Si la requête était mal formée, elle aurait déclenché 400 Bad Request autom
 **/
 
 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-public class ImpossibleAjouterCommandeException extends RuntimeException {
+public class CommandeAjoutImpossibleException extends RuntimeException {
 
-    public ImpossibleAjouterCommandeException(String message) {
+	public CommandeAjoutImpossibleException(String message) {
         super(message);
     }
 }

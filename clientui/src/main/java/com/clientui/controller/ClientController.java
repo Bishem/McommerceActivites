@@ -1,24 +1,25 @@
 package com.clientui.controller;
 
 import com.clientui.beans.CommandeBean;
+import com.clientui.beans.ExpeditionBean;
 import com.clientui.beans.PaiementBean;
 import com.clientui.beans.ProductBean;
 import com.clientui.proxies.MicroserviceCommandeProxy;
+import com.clientui.proxies.MicroserviceExpeditionProxy;
 import com.clientui.proxies.MicroservicePaiementProxy;
 import com.clientui.proxies.MicroserviceProduitsProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -34,6 +35,8 @@ public class ClientController {
     @Autowired
     private MicroservicePaiementProxy paiementProxy;
 
+	@Autowired
+	private MicroserviceExpeditionProxy expeditionProxy;
 
     Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -114,14 +117,26 @@ public class ClientController {
         // On appel le microservice et (étape 7) on récupère le résultat qui est sous forme ResponseEntity<PaiementBean> ce qui va nous permettre de vérifier le code retour.
         ResponseEntity<PaiementBean> paiement = paiementProxy.payerUneCommande(paiementAExcecuter);
 
-        Boolean paiementAccepte = false;
-        //si le code est autre que 201 CREATED, c'est que le paiement n'a pas pu aboutir.
-        if(paiement.getStatusCode() == HttpStatus.CREATED)
-                paiementAccepte = true;
+	    CommandeBean commande = CommandesProxy.recupererUneCommande(idCommande).get();
+//        //si le code est autre que 201 CREATED, c'est que le paiement n'a pas pu aboutir.
+//        if(paiement.getStatusCode() == HttpStatus.CREATED)
+//                paiementAccepte = CommandesProxy.recupererUneCommande(idCommande).get().getCommandePayee();
 
-        model.addAttribute("paiementOk", paiementAccepte); // on envoi un Boolean paiementOk à la vue
+	    model.addAttribute("commande", commande); // on envoi un Boolean paiementOk à la vue
 
-        return "confirmation";
+	    return "Confirmation";
+    }
+
+	@RequestMapping(value = "/suivi/{idCommande}")
+	public String suivreExpedition(@PathVariable int idCommande, Model model) {
+
+		CommandeBean commande = CommandesProxy.recupererUneCommande(idCommande).get();
+		Optional<ExpeditionBean> expedition = expeditionProxy.etatExpedition(commande.getId());
+
+		model.addAttribute("expedition", expedition.get());
+		model.addAttribute("commande", commande);
+
+		return "Expedition";
     }
 
     //Génére une serie de 16 chiffres au hasard pour simuler vaguement une CB
