@@ -1,8 +1,29 @@
-# Created by .ignore support plugin (hsz.mobi)
+target/
+!.mvn/wrapper/maven-wrapper.jar
 
-# IntelliJ project files
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
 .idea
 .idea/*
+.idea/
+/.idea
+/.idea/*
+/.idea/
+*.iws
 *.iml
-out
-gen
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
