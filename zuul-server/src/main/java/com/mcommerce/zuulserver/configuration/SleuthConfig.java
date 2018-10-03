@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SleuthConfig {
 
+	public Sampler defaultSampler() {
 
-    public Sampler defaultSampler(){
-        return Sampler.ALWAYS_SAMPLE;
-    }
+		return Sampler.ALWAYS_SAMPLE;
+	}
 }

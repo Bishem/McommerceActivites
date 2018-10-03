@@ -4,67 +4,83 @@ import java.util.Date;
 
 public class CommandeBean {
 
-    private int id;
+	private Integer id;
+	private Integer productId;
+	private Date dateCommande;
+	private Integer quantite;
+	private Boolean commandePayee;
 
-    private Integer productId;
+	public CommandeBean() {
 
-    private Date dateCommande;
+	}
 
-    private Integer quantite;
+	public CommandeBean(Integer productId, Date dateCommande, Integer quantite, Boolean commandePayee) {
 
-    private Boolean commandePayee;
+		this.productId = productId;
+		this.dateCommande = dateCommande;
+		this.quantite = quantite;
+		this.commandePayee = commandePayee;
+	}
 
-    public CommandeBean() {
-    }
+	public Integer getId() {
 
-    public int getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
 
-    public Integer getProductId() {
-        return productId;
-    }
+		this.id = id;
+	}
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
+	public Integer getProductId() {
 
-    public Date getDateCommande() {
-        return dateCommande;
-    }
+		return productId;
+	}
 
-    public void setDateCommande(Date dateCommande) {
-        this.dateCommande = dateCommande;
-    }
+	public void setProductId(Integer productId) {
 
-    public Integer getQuantite() {
-        return quantite;
-    }
+		this.productId = productId;
+	}
 
-    public void setQuantite(Integer quantite) {
-        this.quantite = quantite;
-    }
+	public Date getDateCommande() {
 
-    public Boolean getCommandePayee() {
-        return commandePayee;
-    }
+		return dateCommande;
+	}
 
-    public void setCommandePayee(Boolean commandePayee) {
-        this.commandePayee = commandePayee;
-    }
+	public void setDateCommande(Date dateCommande) {
 
-    @Override
-    public String toString() {
-        return "CommandeBean{" +
-                "id=" + id +
-                ", productId=" + productId +
-                ", dateCommande=" + dateCommande +
-                ", quantite=" + quantite +
-                ", commandePayee=" + commandePayee +
-                '}';
-    }
+		this.dateCommande = dateCommande;
+	}
+
+	public Integer getQuantite() {
+
+		return quantite;
+	}
+
+	public void setQuantite(Integer quantite) {
+
+		this.quantite = quantite;
+	}
+
+	public Boolean getCommandePayee() {
+
+		return commandePayee;
+	}
+
+	public void setCommandePayee(Boolean commandePayee) {
+
+		this.commandePayee = commandePayee;
+	}
+
+	@Override
+	public String toString() {
+
+		return "CommandeBean{" +
+				"id=" + id +
+				", productId=" + productId +
+				", dateCommande=" + dateCommande +
+				", quantite=" + quantite +
+				", commandePayee=" + commandePayee +
+				'}';
+	}
 }

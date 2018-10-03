@@ -1,74 +1,66 @@
 package com.mexpedition.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Expedition {
 
-    @Id
-    @GeneratedValue
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    @Column(unique = true)
-    private Integer idCommande;
+	@Column(unique = true)
+	private Integer idCommande;
+	private Integer etat;
 
-    private Integer etat;
+	public Expedition() {
 
-    public Expedition() {
+	}
 
-    }
-    public Expedition(int idCommande, Integer etat) {
+	public Expedition(int idCommande, Integer etat) {
 
-        this.idCommande = idCommande;
-        this.etat = etat;
-    }
-    public Expedition(int id, Integer idCommande, Integer etat) {
-        this.id = id;
-        this.idCommande = idCommande;
-        this.etat = etat;
-    }
+		this.idCommande = idCommande;
+		this.etat = etat;
+	}
 
-    public int getId() {
+	public int getId() {
 
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(int id) {
+	public void setId(int id) {
 
-        this.id = id;
-    }
+		this.id = id;
+	}
 
-    public Integer getIdCommande() {
+	public Integer getIdCommande() {
 
-        return idCommande;
-    }
+		return idCommande;
+	}
 
-    public void setIdCommande(Integer idCommande) {
+	public void setIdCommande(Integer idCommande) {
 
-        this.idCommande = idCommande;
-    }
+		this.idCommande = idCommande;
+	}
 
-    public Integer getEtat() {
+	public Integer getEtat() {
 
-        return etat;
-    }
+		return etat;
+	}
 
-    public void setEtat(Integer etat) {
+	public void setEtat(Integer etat) {
 
-        this.etat = etat;
-    }
+		this.etat = etat;
+	}
 
-    @Override
-    public String toString() {
+	@Override
+	public String toString() {
 
-        return "Expedition{" +
-                "id=" + id +
-                ", idCommande=" + idCommande +
-                ", etat=" + etat +
-                '}';
-    }
+		return "Expedition{" +
+				"id=" + id +
+				", idCommande=" + idCommande +
+				", etat=" + etat +
+				'}';
+	}
 }

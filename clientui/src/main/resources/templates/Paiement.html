@@ -21,7 +21,7 @@
 						<span>Quantite : </span><span th:text="${commande.quantite}" class="font-weight-bold"></span>
 					</p>
 					<p>
-						<span>Montant de la Commande : </span><span th:text="${montantCommande}" class="font-weight-bold"></span>
+						<span>Montant de la Commande (Taxes inclues) : </span><span th:text="${montantCommande}" class="font-weight-bold"></span>
 					</p>
 					<p>
 						<a th:href="@{|/suivi/${commande.id}/${montantCommande}|}" class="font-weight-bold">Suivre Ma Commande</a>

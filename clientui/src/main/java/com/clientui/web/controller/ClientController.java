@@ -1,4 +1,4 @@
-package com.clientui.controller;
+package com.clientui.web.controller;
 
 import com.clientui.beans.CommandeBean;
 import com.clientui.beans.ExpeditionBean;
@@ -29,6 +29,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ClientController {
 
 	Logger log = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	private MicroserviceProduitsProxy ProduitsProxy;
 	@Autowired
@@ -42,13 +43,11 @@ public class ClientController {
 	@GetMapping("/")
 	public String accueil(Model model) {
 
-
 		log.info("Envoi requête vers microservice-produits");
 
 		List<ProductBean> produits = ProduitsProxy.listeDesProduits();
 
 		model.addAttribute("produits", produits);
-
 
 		return "Accueil";
 	}
@@ -76,9 +75,9 @@ public class ClientController {
 		commande.setQuantite(quantiteAleatoire);
 		commande.setDateCommande(new Date());
 
-		CommandeBean commandeAjoutee = CommandesProxy.ajouterCommande(commande);
+		ResponseEntity<CommandeBean> commandeAjoutee = CommandesProxy.ajouterCommande(commande);
 
-		model.addAttribute("commande", commandeAjoutee);
+		model.addAttribute("commande", commandeAjoutee.getBody());
 		model.addAttribute("montantCommande", montantCommande);
 
 		return "Paiement";
@@ -97,7 +96,7 @@ public class ClientController {
 
 		CommandeBean commande = null;
 
-		if (paiement.getStatusCode() == HttpStatus.CREATED) {
+		if (paiement.getStatusCode().is2xxSuccessful()) {
 			commande = CommandesProxy.recupererUneCommande(idCommande).get();
 		}
 
@@ -105,11 +104,6 @@ public class ClientController {
 		model.addAttribute("montantCommande", montantCommande);
 
 		return "Confirmation";
-	}
-
-	private Long numcarte() {
-
-		return ThreadLocalRandom.current().nextLong(1000000000000000L, 9000000000000000L);
 	}
 
 	@GetMapping(value = "/suivi/{idCommande}/{montantCommande}")
@@ -123,5 +117,10 @@ public class ClientController {
 		model.addAttribute("montantCommande", montantCommande);
 
 		return "Expedition";
+	}
+
+	private Long numcarte() {
+
+		return ThreadLocalRandom.current().nextLong(1000000000000000L, 9000000000000000L);
 	}
 }

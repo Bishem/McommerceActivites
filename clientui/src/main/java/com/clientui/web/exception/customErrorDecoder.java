@@ -1,4 +1,4 @@
-package com.clientui.exception;
+package com.clientui.web.exception;
 
 import feign.Response;
 import feign.Util;
@@ -23,27 +23,20 @@ public class customErrorDecoder implements ErrorDecoder {
 		try {
 
 			final HttpHeaders responseHeaders = new HttpHeaders();
-
-			response.headers().entrySet().stream().forEach(entry -> responseHeaders.put(entry.getKey(), new ArrayList<>(entry.getValue())));
-
 			final HttpStatus statusCode = HttpStatus.valueOf(response.status());
-
 			final String statusText = response.reason();
-
 			byte[] responseBody;
 
+			response.headers().entrySet().stream().forEach(entry -> responseHeaders.put(entry.getKey(), new ArrayList<>(entry.getValue())));
 			responseBody = Util.toByteArray(response.body().asInputStream());
 
 			if (response.status() >= 400 && response.status() <= 499) {
-
 				return new HttpClientErrorException(statusCode, statusText, responseHeaders, responseBody, null);
 			} else if (response.status() >= 500 && response.status() <= 599) {
-
 				return new HttpServerErrorException(statusCode, statusText, responseHeaders, responseBody, null);
 			}
 
 		} catch (final IOException e) {
-
 			throw new RuntimeException("Failed to process response body", e);
 		}
 

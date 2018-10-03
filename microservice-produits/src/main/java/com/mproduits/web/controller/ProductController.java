@@ -20,52 +20,52 @@ import java.util.Optional;
 @RestController
 public class ProductController implements HealthIndicator {
 
-    @Autowired
-    ProductDao productDao;
+	@Autowired
+	ProductDao productDao;
 
+	@Autowired
+	ApplicationPropertiesConfiguration appProperties;
 
-    Logger log = LoggerFactory.getLogger(this.getClass());
+	Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    ApplicationPropertiesConfiguration appProperties;
+	@Override
+	public Health health() {
 
-    @Override
-    public Health health() {
+		List<Product> products = productDao.findAll();
 
-        List<Product> products = productDao.findAll();
+		if (products.isEmpty()) {
+			return Health.down().build();
+		} else {
+			return Health.up().build();
+		}
+	}
 
-        if(products.isEmpty()) {
-            return Health.down().build();
-        }
-        return Health.up().build();
-    }
+	@GetMapping(value = "/Produits")
+	public List<Product> listeDesProduits() {
 
-    // Affiche la liste de tous les produits disponibles
-    @GetMapping(value = "/Produits")
-    public List<Product> listeDesProduits(){
+		List<Product> products = productDao.findAll();
 
-        List<Product> products = productDao.findAll();
+		if (products.isEmpty()) {
+			throw new ProductNotFoundException("Aucun produit n'est disponible à la vente");
+		} else {
 
-        if(products.isEmpty()) throw new ProductNotFoundException("Aucun produit n'est disponible à la vente");
+			List<Product> listeLimitee = products.subList(0, appProperties.getLimitDeProduits());
+			log.info("Récupération de la liste des produits");
 
-        List<Product> listeLimitee = products.subList(0, appProperties.getLimitDeProduits());
+			return listeLimitee;
+		}
+	}
 
+	@GetMapping(value = "/Produits/{id}")
+	public Optional<Product> recupererUnProduit(@PathVariable int id) {
 
-        log.info("Récupération de la liste des produits");
+		Optional<Product> product = productDao.findById(id);
 
-        return listeLimitee;
-
-    }
-
-    //Récuperer un produit par son id
-    @GetMapping( value = "/Produits/{id}")
-    public Optional<Product> recupererUnProduit(@PathVariable int id) {
-
-        Optional<Product> product = productDao.findById(id);
-
-        if(!product.isPresent())  throw new ProductNotFoundException("Le produit correspondant à l'id " + id + " n'existe pas");
-
-        return product;
-    }
+		if (!product.isPresent()) {
+			throw new ProductNotFoundException("Le produit correspondant à l'id " + id + " n'existe pas");
+		} else {
+			return product;
+		}
+	}
 }
 

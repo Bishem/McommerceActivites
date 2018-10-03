@@ -16,14 +16,6 @@ public class ExpeditionBean {
 		this.etat = etat;
 	}
 
-	public ExpeditionBean(int id, Integer idCommande, Integer etat) {
-
-		this.id = id;
-		this.idCommande = idCommande;
-		this.etat = etat;
-	}
-
-
 	public int getId() {
 
 		return id;

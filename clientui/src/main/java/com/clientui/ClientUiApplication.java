@@ -13,11 +13,13 @@ import org.springframework.context.annotation.Bean;
 public class ClientUiApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(ClientUiApplication.class, args);
 	}
 
 	@Bean
-	public Sampler defaultSampler(){
+	public Sampler defaultSampler() {
+
 		return Sampler.ALWAYS_SAMPLE;
 	}
 }

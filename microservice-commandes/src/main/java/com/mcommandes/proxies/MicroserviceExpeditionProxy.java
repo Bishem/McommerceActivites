@@ -19,5 +19,5 @@ public interface MicroserviceExpeditionProxy {
 	Optional<ExpeditionBean> etatExpedition(@PathVariable("idCommande") int idCommande);
 
 	@PutMapping(value = "/microservice-expedition/expedition")
-	void updateExpedition(@RequestBody ExpeditionBean expeditionBean);
+	ResponseEntity<ExpeditionBean> updateExpedition(@RequestBody ExpeditionBean expeditionBean);
 }

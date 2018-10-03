@@ -13,8 +13,7 @@ import org.springframework.context.annotation.Bean;
 public class ZuulServerApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(ZuulServerApplication.class, args);
 	}
-
-
 }

@@ -3,56 +3,70 @@ package com.clientui.beans;
 
 public class PaiementBean {
 
-    private int id;
+	private Integer id;
+	private Integer idCommande;
+	private Double montant;
+	private Long numeroCarte;
 
-    private Integer idCommande;
+	public PaiementBean() {
 
-    private Double montant;
+	}
 
-    private Long numeroCarte;
+	public PaiementBean(Integer idCommande, Double montant, Long numeroCarte) {
 
-    public PaiementBean() {
-    }
+		this.idCommande = idCommande;
+		this.montant = montant;
+		this.numeroCarte = numeroCarte;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public Integer getId() {
 
-    public void setId(int id) {
-        this.id = id;
-    }
+		return id;
+	}
 
-    public Integer getIdCommande() {
-        return idCommande;
-    }
+	public void setId(Integer id) {
 
-    public void setIdCommande(Integer idCommande) {
-        this.idCommande = idCommande;
-    }
+		this.id = id;
+	}
 
-    public Double getMontant() {
-        return montant;
-    }
+	public Integer getIdCommande() {
 
-    public void setMontant(Double montant) {
-        this.montant = montant;
-    }
+		return idCommande;
+	}
 
-    public Long getNumeroCarte() {
-        return numeroCarte;
-    }
+	public void setIdCommande(Integer idCommande) {
 
-    public void setNumeroCarte(Long numeroCarte) {
-        this.numeroCarte = numeroCarte;
-    }
+		this.idCommande = idCommande;
+	}
 
-    @Override
-    public String toString() {
-        return "PaiementBean{" +
-                "id=" + id +
-                ", idCommande=" + idCommande +
-                ", montant=" + montant +
-                ", numeroCarte=" + numeroCarte +
-                '}';
-    }
+	public Double getMontant() {
+
+		return montant;
+	}
+
+	public void setMontant(Double montant) {
+
+		this.montant = montant;
+	}
+
+	public Long getNumeroCarte() {
+
+		return numeroCarte;
+	}
+
+	public void setNumeroCarte(Long numeroCarte) {
+
+		this.numeroCarte = numeroCarte;
+	}
+
+	@Override
+	public String toString() {
+
+		return "PaiementBean{" +
+				"id=" + id +
+				", idCommande=" + idCommande +
+				", montant=" + montant +
+				", numeroCarte=" + numeroCarte +
+				'}';
+	}
 }

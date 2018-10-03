@@ -9,13 +9,15 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("mes-configs")
 public class ApplicationPropertiesConfiguration {
 
-    private int limitDeProduits;
+	private int limitDeProduits;
 
-    public int getLimitDeProduits() {
-        return limitDeProduits;
-    }
+	public int getLimitDeProduits() {
 
-    public void setLimitDeProduits(int limitDeProduits) {
-        this.limitDeProduits = limitDeProduits;
-    }
+		return limitDeProduits;
+	}
+
+	public void setLimitDeProduits(int limitDeProduits) {
+
+		this.limitDeProduits = limitDeProduits;
+	}
 }

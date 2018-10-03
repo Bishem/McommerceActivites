@@ -7,18 +7,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Component
-public class ReponseFilter extends ZuulFilter {
+public class RequestFilter extends ZuulFilter {
 
 	Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public String filterType() {
 
-		return "post";
+		return "pre";
 	}
 
 	@Override
@@ -30,15 +30,15 @@ public class ReponseFilter extends ZuulFilter {
 	@Override
 	public boolean shouldFilter() {
 
-		return true;
+		return false;
 	}
 
 	@Override
 	public Object run() throws ZuulException {
 
-		HttpServletResponse response = RequestContext.getCurrentContext().getResponse();
+		HttpServletRequest req = RequestContext.getCurrentContext().getRequest();
 
-		log.info(" CODE HTTP {} ", response.getStatus());
+		log.info("**** Requête interceptée ! L'URL est : {} ", req.getRequestURL());
 
 		return null;
 	}

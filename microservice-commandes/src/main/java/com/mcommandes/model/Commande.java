@@ -3,83 +3,92 @@ package com.mcommandes.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
 public class Commande {
 
-    @Id
-    @GeneratedValue
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	private Integer productId;
+	private Date dateCommande;
+	private Integer quantite;
+	private Boolean commandePayee;
 
-    private Integer productId;
+	public Commande() {
 
-    private Date dateCommande;
+	}
 
-    private Integer quantite;
+	public Commande(Integer productId, Date dateCommande, Integer quantite, Boolean commandePayee) {
 
-    private Boolean commandePayee;
+		this.productId = productId;
+		this.dateCommande = dateCommande;
+		this.quantite = quantite;
+		this.commandePayee = commandePayee;
+	}
 
-    public Commande() {
-    }
+	public Integer getId() {
 
-    public Commande(int id, Integer productId, Date dateCommande, Integer quantite, Boolean commandePayee) {
-        this.id = id;
-        this.productId = productId;
-        this.dateCommande = dateCommande;
-        this.quantite = quantite;
-        this.commandePayee = commandePayee;
-    }
+		return id;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public void setId(Integer id) {
 
-    public void setId(int id) {
-        this.id = id;
-    }
+		this.id = id;
+	}
 
-    public Integer getProductId() {
-        return productId;
-    }
+	public Integer getProductId() {
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
+		return productId;
+	}
 
-    public Date getDateCommande() {
-        return dateCommande;
-    }
+	public void setProductId(Integer productId) {
 
-    public void setDateCommande(Date dateCommande) {
-        this.dateCommande = dateCommande;
-    }
+		this.productId = productId;
+	}
 
-    public Integer getQuantite() {
-        return quantite;
-    }
+	public Date getDateCommande() {
 
-    public void setQuantite(Integer quantite) {
-        this.quantite = quantite;
-    }
+		return dateCommande;
+	}
 
-    public Boolean getCommandePayee() {
-        return commandePayee;
-    }
+	public void setDateCommande(Date dateCommande) {
 
-    public void setCommandePayee(Boolean commandePayee) {
-        this.commandePayee = commandePayee;
-    }
+		this.dateCommande = dateCommande;
+	}
 
-    @Override
-    public String toString() {
-        return "commande{" +
-                "id=" + id +
-                ", productId=" + productId +
-                ", dateCommande=" + dateCommande +
-                ", quantite=" + quantite +
-                ", commandePayee=" + commandePayee +
-                '}';
-    }
+	public Integer getQuantite() {
+
+		return quantite;
+	}
+
+	public void setQuantite(Integer quantite) {
+
+		this.quantite = quantite;
+	}
+
+	public Boolean getCommandePayee() {
+
+		return commandePayee;
+	}
+
+	public void setCommandePayee(Boolean commandePayee) {
+
+		this.commandePayee = commandePayee;
+	}
+
+	@Override
+	public String toString() {
+
+		return "commande{" +
+				"id=" + id +
+				", productId=" + productId +
+				", dateCommande=" + dateCommande +
+				", quantite=" + quantite +
+				", commandePayee=" + commandePayee +
+				'}';
+	}
 }
