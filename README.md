@@ -67,7 +67,8 @@ au demarrage l'application a tendence a avoir des rates
 dans ce cas, revener simplement en arriere, rafraichissez la page et reessayer
 
 vous pouvez egalement redemarrer les microservices 
-(plus lentement par contre, si vous pressez un citron plus vite il n'y aura pas plus de jus a l'arriver)
+(plus lentement par contre, si vous pressez un citron plus vite il n'y aura pas plus de jus a l'arriver,
+par contre votre citron sera bien defonce)
 
 -- parole d'un devellopeur non-aguerri sur une technologie non-maitrisé ;-)
 ```
