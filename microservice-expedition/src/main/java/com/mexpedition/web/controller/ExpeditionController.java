@@ -14,34 +14,34 @@ import java.util.Optional;
 @RestController
 public class ExpeditionController {
 
-	@Autowired
-	ExpeditionDao expeditionDao;
+    @Autowired
+    ExpeditionDao expeditionDao;
 
-	@PostMapping(value = "/expedition")
-	public ResponseEntity<Expedition> ajouterExpedition(@RequestBody Expedition expedition) {
+    @PostMapping(value = "/expedition")
+    public ResponseEntity<Expedition> ajouterExpedition(@RequestBody Expedition expedition) {
 
-		Expedition nouvelleExpedition = expeditionDao.save(expedition);
+        Expedition nouvelleExpedition = expeditionDao.save(expedition);
 
-		return new ResponseEntity<>(nouvelleExpedition, HttpStatus.CREATED);
-	}
+        return new ResponseEntity<>(nouvelleExpedition, HttpStatus.CREATED);
+    }
 
-	@GetMapping(value = "/expedition/{idCommande}")
-	public Optional<Expedition> etatExpedition(@PathVariable int idCommande) {
+    @GetMapping(value = "/expedition/{idCommande}")
+    public Optional<Expedition> etatExpedition(@PathVariable int idCommande) {
 
-		Optional<Expedition> expedition = expeditionDao.findByIdCommande(idCommande);
+        Optional<Expedition> expedition = expeditionDao.findByIdCommande(idCommande);
 
-		if (!expedition.isPresent()) {
-			throw new ExpeditionNotFoundException("Cette expedition n'existe pas");
-		} else {
-			return expedition;
-		}
-	}
+        if (!expedition.isPresent()) {
+            throw new ExpeditionNotFoundException("Cette expedition n'existe pas");
+        } else {
+            return expedition;
+        }
+    }
 
-	@PutMapping(value = "/expedition")
-	public ResponseEntity<Expedition> updateExpedition(@RequestBody Expedition expedition) {
+    @PutMapping(value = "/expedition")
+    public ResponseEntity<Expedition> updateExpedition(@RequestBody Expedition expedition) {
 
-		Expedition expeditionMModifiee = expeditionDao.save(expedition);
+        Expedition expeditionMModifiee = expeditionDao.save(expedition);
 
-		return new ResponseEntity<>(expeditionMModifiee, HttpStatus.CREATED);
-	}
+        return new ResponseEntity<>(expeditionMModifiee, HttpStatus.CREATED);
+    }
 }

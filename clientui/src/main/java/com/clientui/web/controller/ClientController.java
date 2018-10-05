@@ -28,99 +28,100 @@ import java.util.concurrent.ThreadLocalRandom;
 @Controller
 public class ClientController {
 
-	Logger log = LoggerFactory.getLogger(this.getClass());
+    Logger log = LoggerFactory.getLogger(this.getClass());
 
-	@Autowired
-	private MicroserviceProduitsProxy ProduitsProxy;
-	@Autowired
-	private MicroserviceCommandeProxy CommandesProxy;
+    @Autowired
+    private MicroserviceProduitsProxy ProduitsProxy;
+    @Autowired
+    private MicroserviceCommandeProxy CommandesProxy;
 
-	@Autowired
-	private MicroserviceExpeditionProxy expeditionProxy;
-	@Autowired
-	private MicroservicePaiementProxy paiementProxy;
+    @Autowired
+    private MicroserviceExpeditionProxy expeditionProxy;
 
-	@GetMapping("/")
-	public String accueil(Model model) {
+    @Autowired
+    private MicroservicePaiementProxy paiementProxy;
 
-		log.info("Envoi requête vers microservice-produits");
+    @GetMapping("/")
+    public String accueil(Model model) {
 
-		List<ProductBean> produits = ProduitsProxy.listeDesProduits();
+        log.info("Envoi requête vers microservice-produits");
 
-		model.addAttribute("produits", produits);
+        List<ProductBean> produits = ProduitsProxy.listeDesProduits();
 
-		return "Accueil";
-	}
+        model.addAttribute("produits", produits);
 
-	@GetMapping("/details-produit/{id}")
-	public String ficheProduit(@PathVariable int id, Model model) {
+        return "Accueil";
+    }
 
-		ProductBean produit = ProduitsProxy.recupererUnProduit(id);
+    @GetMapping("/details-produit/{id}")
+    public String ficheProduit(@PathVariable int id, Model model) {
 
-		model.addAttribute("produit", produit);
+        ProductBean produit = ProduitsProxy.recupererUnProduit(id);
 
-		return "FicheProduit";
-	}
+        model.addAttribute("produit", produit);
 
-	@GetMapping(value = "/commander-produit/{idProduit}/{prixProduit}")
-	public String passerCommande(@PathVariable int idProduit, @PathVariable Double prixProduit, Model model) {
+        return "FicheProduit";
+    }
 
-		Integer taxes = new Random().nextInt(10) + 10;
-		Integer quantiteAleatoire = new Random().nextInt(9) + 1;
-		Double montantCommande = (prixProduit + taxes) * quantiteAleatoire;
+    @GetMapping(value = "/commander-produit/{idProduit}/{prixProduit}")
+    public String passerCommande(@PathVariable int idProduit, @PathVariable Double prixProduit, Model model) {
 
-		CommandeBean commande = new CommandeBean();
+        Integer taxes = new Random().nextInt(10) + 10;
+        Integer quantiteAleatoire = new Random().nextInt(9) + 1;
+        Double montantCommande = (prixProduit + taxes) * quantiteAleatoire;
 
-		commande.setProductId(idProduit);
-		commande.setQuantite(quantiteAleatoire);
-		commande.setDateCommande(new Date());
+        CommandeBean commande = new CommandeBean();
 
-		ResponseEntity<CommandeBean> commandeAjoutee = CommandesProxy.ajouterCommande(commande);
+        commande.setProductId(idProduit);
+        commande.setQuantite(quantiteAleatoire);
+        commande.setDateCommande(new Date());
 
-		model.addAttribute("commande", commandeAjoutee.getBody());
-		model.addAttribute("montantCommande", montantCommande);
+        ResponseEntity<CommandeBean> commandeAjoutee = CommandesProxy.ajouterCommande(commande);
 
-		return "Paiement";
-	}
+        model.addAttribute("commande", commandeAjoutee.getBody());
+        model.addAttribute("montantCommande", montantCommande);
 
-	@GetMapping(value = "/payer-commande/{idCommande}/{montantCommande}")
-	public String payerCommande(@PathVariable int idCommande, @PathVariable Double montantCommande, Model model) {
+        return "Paiement";
+    }
 
-		PaiementBean paiementAExcecuter = new PaiementBean();
+    @GetMapping(value = "/payer-commande/{idCommande}/{montantCommande}")
+    public String payerCommande(@PathVariable int idCommande, @PathVariable Double montantCommande, Model model) {
 
-		paiementAExcecuter.setIdCommande(idCommande);
-		paiementAExcecuter.setMontant(montantCommande);
-		paiementAExcecuter.setNumeroCarte(numcarte());
+        PaiementBean paiementAExcecuter = new PaiementBean();
 
-		ResponseEntity<PaiementBean> paiement = paiementProxy.payerUneCommande(paiementAExcecuter);
+        paiementAExcecuter.setIdCommande(idCommande);
+        paiementAExcecuter.setMontant(montantCommande);
+        paiementAExcecuter.setNumeroCarte(numcarte());
 
-		CommandeBean commande = null;
+        ResponseEntity<PaiementBean> paiement = paiementProxy.payerUneCommande(paiementAExcecuter);
 
-		if (paiement.getStatusCode().is2xxSuccessful()) {
-			commande = CommandesProxy.recupererUneCommande(idCommande).get();
-		}
+        CommandeBean commande = null;
 
-		model.addAttribute("commande", commande);
-		model.addAttribute("montantCommande", montantCommande);
+        if (paiement.getStatusCode().is2xxSuccessful()) {
+            commande = CommandesProxy.recupererUneCommande(idCommande).get();
+        }
 
-		return "Confirmation";
-	}
+        model.addAttribute("commande", commande);
+        model.addAttribute("montantCommande", montantCommande);
 
-	@GetMapping(value = "/suivi/{idCommande}/{montantCommande}")
-	public String suivreExpedition(@PathVariable int idCommande, @PathVariable Double montantCommande, Model model) {
+        return "Confirmation";
+    }
 
-		CommandeBean commande = CommandesProxy.recupererUneCommande(idCommande).get();
-		Optional<ExpeditionBean> expedition = expeditionProxy.etatExpedition(commande.getId());
+    @GetMapping(value = "/suivi/{idCommande}/{montantCommande}")
+    public String suivreExpedition(@PathVariable int idCommande, @PathVariable Double montantCommande, Model model) {
 
-		model.addAttribute("expedition", expedition.get());
-		model.addAttribute("commande", commande);
-		model.addAttribute("montantCommande", montantCommande);
+        CommandeBean commande = CommandesProxy.recupererUneCommande(idCommande).get();
+        Optional<ExpeditionBean> expedition = expeditionProxy.etatExpedition(commande.getId());
 
-		return "Expedition";
-	}
+        model.addAttribute("expedition", expedition.get());
+        model.addAttribute("commande", commande);
+        model.addAttribute("montantCommande", montantCommande);
 
-	private Long numcarte() {
+        return "Expedition";
+    }
 
-		return ThreadLocalRandom.current().nextLong(1000000000000000L, 9000000000000000L);
-	}
+    private Long numcarte() {
+
+        return ThreadLocalRandom.current().nextLong(1000000000000000L, 9000000000000000L);
+    }
 }

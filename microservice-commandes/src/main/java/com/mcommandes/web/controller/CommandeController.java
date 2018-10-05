@@ -17,55 +17,50 @@ import java.util.Optional;
 @RestController
 public class CommandeController {
 
-	@Autowired
-	CommandesDao commandesDao;
+    @Autowired
+    CommandesDao commandesDao;
 
-	@Autowired
-	MicroserviceExpeditionProxy microserviceExpeditionProxy;
+    @Autowired
+    MicroserviceExpeditionProxy microserviceExpeditionProxy;
 
-	@GetMapping(value = "/commandes/{id}")
-	public Optional<Commande> recupererUneCommande(@PathVariable int id) {
+    @GetMapping(value = "/commandes/{id}")
+    public Optional<Commande> recupererUneCommande(@PathVariable int id) {
 
-		Optional<Commande> commande = commandesDao.findById(id);
+        Optional<Commande> commande = commandesDao.findById(id);
 
-		if (!commande.isPresent()) {
-			throw new CommandeNotFoundException("Cette commande n'existe pas");
-		} else {
-			return commande;
-		}
-	}
+        if (!commande.isPresent()) {
+            throw new CommandeNotFoundException("Cette commande n'existe pas");
+        } else {
+            return commande;
+        }
+    }
 
-	@PostMapping(value = "/commandes")
-	public ResponseEntity<Commande> ajouterCommande(@RequestBody Commande commande) {
+    @PostMapping(value = "/commandes")
+    public ResponseEntity<Commande> ajouterCommande(@RequestBody Commande commande) {
 
-		Commande nouvelleCommande = commandesDao.save(commande);
-		ResponseEntity<ExpeditionBean> nouvelleExpedition = microserviceExpeditionProxy.ajouterExpedition(new ExpeditionBean(commande.getId(), 0));
+        Commande nouvelleCommande = commandesDao.save(commande);
 
-		if (nouvelleExpedition == null) {
-			throw new CommandeAjoutImpossibleException("Impossible d'ajouter cette commande");
-		} else {
-			return new ResponseEntity<>(commande, HttpStatus.CREATED);
-		}
-	}
+        return new ResponseEntity<>(commande, HttpStatus.CREATED);
+    }
 
-	@PutMapping(value = "/commandes")
-	public ResponseEntity<Commande> updateCommande(@RequestBody Commande commande) {
+    @PutMapping(value = "/commandes")
+    public ResponseEntity<Commande> updateCommande(@RequestBody Commande commande) {
 
-		Commande commandeModifiee = commandesDao.save(commande);
-		Optional<ExpeditionBean> expedition = microserviceExpeditionProxy.etatExpedition(commandeModifiee.getId());
+        Commande commandeModifiee = commandesDao.save(commande);
+        Optional<ExpeditionBean> expedition = microserviceExpeditionProxy.etatExpedition(commandeModifiee.getId());
 
-		if (!expedition.isPresent()) {
-			throw new CommandeAjoutImpossibleException("Impossible de mettre a jour cette commande");
-		} else {
+        if (!expedition.isPresent()) {
+            throw new CommandeAjoutImpossibleException("Impossible de mettre a jour cette commande");
+        } else {
 
-			expedition.get().setEtat(1);
-			ResponseEntity<ExpeditionBean> expeditionModifiee = this.microserviceExpeditionProxy.updateExpedition(expedition.get());
+            expedition.get().setEtat(1);
+            ResponseEntity<ExpeditionBean> expeditionModifiee = this.microserviceExpeditionProxy.updateExpedition(expedition.get());
 
-			if (!expeditionModifiee.getStatusCode().is2xxSuccessful()) {
-				throw new CommandeAjoutImpossibleException("Cette Commande n'as pas pu etre expediee");
-			} else {
-				return new ResponseEntity<>(commandeModifiee, HttpStatus.CREATED);
-			}
-		}
-	}
+            if (!expeditionModifiee.getStatusCode().is2xxSuccessful()) {
+                throw new CommandeAjoutImpossibleException("Cette Commande n'as pas pu etre expediee");
+            } else {
+                return new ResponseEntity<>(commandeModifiee, HttpStatus.CREATED);
+            }
+        }
+    }
 }

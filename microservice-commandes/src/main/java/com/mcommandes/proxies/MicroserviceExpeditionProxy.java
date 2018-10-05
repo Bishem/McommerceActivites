@@ -12,12 +12,9 @@ import java.util.Optional;
 @RibbonClient(name = "microservice-expedition")
 public interface MicroserviceExpeditionProxy {
 
-	@PostMapping(value = "/microservice-expedition/expedition")
-	ResponseEntity<ExpeditionBean> ajouterExpedition(@RequestBody ExpeditionBean expeditionBean);
+    @GetMapping(value = "/microservice-expedition/expedition/{idCommande}")
+    Optional<ExpeditionBean> etatExpedition(@PathVariable("idCommande") int idCommande);
 
-	@GetMapping(value = "/microservice-expedition/expedition/{idCommande}")
-	Optional<ExpeditionBean> etatExpedition(@PathVariable("idCommande") int idCommande);
-
-	@PutMapping(value = "/microservice-expedition/expedition")
-	ResponseEntity<ExpeditionBean> updateExpedition(@RequestBody ExpeditionBean expeditionBean);
+    @PutMapping(value = "/microservice-expedition/expedition")
+    ResponseEntity<ExpeditionBean> updateExpedition(@RequestBody ExpeditionBean expeditionBean);
 }

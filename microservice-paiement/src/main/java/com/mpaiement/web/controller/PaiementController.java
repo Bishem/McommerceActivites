@@ -1,9 +1,11 @@
 package com.mpaiement.web.controller;
 
 import com.mpaiement.beans.CommandeBean;
+import com.mpaiement.beans.ExpeditionBean;
 import com.mpaiement.dao.PaiementDao;
 import com.mpaiement.model.Paiement;
 import com.mpaiement.proxies.MicroserviceCommandeProxy;
+import com.mpaiement.proxies.MicroserviceExpeditionProxy;
 import com.mpaiement.web.exceptions.PaiementExistantException;
 import com.mpaiement.web.exceptions.PaiementImpossibleException;
 import org.slf4j.Logger;
@@ -11,76 +13,60 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
 @RestController
 public class PaiementController {
 
-	Logger log = LoggerFactory.getLogger(this.getClass());
+    Logger log = LoggerFactory.getLogger(this.getClass());
 
-	@Autowired
-	PaiementDao paiementDao;
+    @Autowired
+    PaiementDao paiementDao;
 
-	@Autowired
-	MicroserviceCommandeProxy microserviceCommandeProxy;
+    @Autowired
+    MicroserviceCommandeProxy microserviceCommandeProxy;
 
-	@PostMapping(value = "/paiement")
-	public ResponseEntity<Paiement> payerUneCommande(@RequestBody Paiement paiement) {
+    @Autowired
+    MicroserviceExpeditionProxy microserviceExpeditionProxy;
 
-		log.info("----------- into paiement");
+    @PostMapping(value = "/paiement")
+    public ResponseEntity<Paiement> payerUneCommande(@RequestBody Paiement paiement) {
 
-		testerExistancePaiement(paiement);
+        testerExistancePaiement(paiement);
+        Paiement nouveauPaiement = paiementDao.save(paiement);
+        modifierEtatCommande(paiement);
 
-		log.info("----------- test OK");
+        return new ResponseEntity<>(nouveauPaiement, HttpStatus.CREATED);
+    }
 
-		Paiement nouveauPaiement = paiementDao.save(paiement);
+    private void testerExistancePaiement(@RequestBody Paiement paiement) {
 
-		log.info("----------- paiement saved");
+        Optional<Paiement> paiementExistant = paiementDao.findByidCommande(paiement.getIdCommande());
 
-		modifierEtatCommande(paiement);
+        if (paiementExistant.isPresent()) {
+            throw new PaiementExistantException("Cette commande est déjà payée");
+        }
+    }
 
-		log.info("----------- commande updated");
+    private void modifierEtatCommande(@RequestBody Paiement paiement) {
 
-		return new ResponseEntity<>(nouveauPaiement, HttpStatus.CREATED);
-	}
+        CommandeBean commande = microserviceCommandeProxy.recupererUneCommande(paiement.getIdCommande()).get();
 
-	private void testerExistancePaiement(@RequestBody Paiement paiement) {
+        ResponseEntity<ExpeditionBean> nouvelleExpedition = microserviceExpeditionProxy.ajouterExpedition(new ExpeditionBean(commande.getId(), 0));
 
-		log.info("----------- into test");
+        if (!nouvelleExpedition.hasBody()) {
+            throw new PaiementImpossibleException("Impossible d'expedier cette commande");
+        } else {
+            commande.setCommandePayee(true);
+            ResponseEntity<CommandeBean> commandeModifiee = microserviceCommandeProxy.updateCommande(commande);
 
-		Optional<Paiement> paiementExistant = paiementDao.findByidCommande(paiement.getIdCommande());
-
-		log.info("----------- checked db");
-
-		if (paiementExistant.isPresent()) {
-			throw new PaiementExistantException("Cette commande est déjà payée");
-		}
-
-		log.info("----------- done testing");
-	}
-
-	private void modifierEtatCommande(@RequestBody Paiement paiement) {
-
-		log.info("----------- into update");
-
-		CommandeBean commande = microserviceCommandeProxy.recupererUneCommande(paiement.getIdCommande()).get();
-
-		log.info("----------- found commande");
-
-		commande.setCommandePayee(true);
-
-		log.info("----------- changed commande state");
-
-		ResponseEntity<CommandeBean> commandeModifiee = microserviceCommandeProxy.updateCommande(commande);
-
-		log.info("----------- commande sent");
-
-		if (!commandeModifiee.getStatusCode().is2xxSuccessful()) {
-			throw new PaiementImpossibleException("La Commande N°" + commandeModifiee.getBody().getId() + "liée a ce paiement n'as pas put etre mise a jour");
-		}
-
-		log.info("done updating");
-	}
+            if (!commandeModifiee.getStatusCode().is2xxSuccessful()) {
+                throw new PaiementImpossibleException("La Commande N°" + commandeModifiee.getBody().getId() + "liée a ce paiement n'as pas put etre mise a jour");
+            }
+        }
+    }
 }

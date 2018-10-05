@@ -1,35 +1,32 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>Mcommerce</title>
-		<link rel="stylesheet" type="text/css" href="http://localhost:8080/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css"/>
-	</head>
-	<body>
-		<div class="container">
-			<h1 class="text-center">Application Mcommerce</h1>
-			<br/>
-			<h1 class="text-center">Exercice 2</h1>
-			<div class="row">
-				<div class="col-md-4 mx-auto mt-5 text-center">
-					<p>
-						<span>Commande N° : </span><span th:text="${commande.id}" class="font-weight-bold"></span>
-					</p>
-					<p>Etat de la commande :</p>
-					<p th:if="${expedition.etat} == 0" style="color: green">En Preparation</p>
-					<p th:if="${expedition.etat} == 1" style="color: green">Expediée</p>
-					<p th:if="${expedition.etat} == 2" style="color: green">Livrée</p>
-					<br/>
-					<p th:if="${expedition.etat} == 0">
-						<a th:href="@{|/payer-commande/${commande.id}/${montantCommande}|}" class="font-weight-bold">Payer Ma Commande</a>
-					</p>
-					<p th:unless="${expedition.etat} == 0">
-						<a th:href="@{|/|}" class="font-weight-bold">Retourner au menu principal</a>
-					</p>
-				</div>
-			</div>
-		</div>
-
-		<script type="text/javascript" src="http://localhost:8080/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js"></script>
-
-	</body>
+    <head>
+        <title>Mcommerce</title>
+        <link rel="stylesheet" type="text/css" href="http://localhost:8080/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="../static/css/expedition.css" th:href="@{/css/expedition.css}"/>
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="text-center">Application Mcommerce</h1>
+            <br/>
+            <h1 class="text-center">Exercice 2</h1>
+            <div class="row">
+                <div class="col-md-4 mx-auto mt-5 text-center">
+                    <p>
+                        <span>Commande N° : <span th:text="${commande.id}" class="font-weight-bold"></span></span>
+                    </p>
+                    <div>
+                        Etat de la commande :<br />
+                        <span th:if="${expedition.etat} == 0" class="state">En Preparation</span><br />
+                        <span th:if="${expedition.etat} == 1" class="state">Expediée</span><br />
+                        <span th:if="${expedition.etat} == 2" class="state">Livrée</span><br />
+                    </div>
+                    <div th:if="${expedition.etat} == 1">
+                        <a th:href="@{|/|}" class="font-weight-bold">Retourner au menu principal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="http://localhost:8080/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js"></script>
+    </body>
 </html>
