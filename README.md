@@ -19,6 +19,7 @@ git clone https://github.com/Bishem/McommerceActivites.git
 
 (vous pouvez donc ranger le reste de votre corps au placard vous n'en aurez pas besoin pour le reste de ce projet)
 
+
 ```
 IDE : 
 - IntelliJ IDEA
