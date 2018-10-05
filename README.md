@@ -15,16 +15,10 @@ dans
 
 ### Prerequis
 
-IDE
-Java
+- IDE
+- Java
 
-(des mains !!
-
-vous pouvez donc ranger 
-le reste de votre corps au placard 
-
-vous n'en aurez pas besoin)
-
+- des mains (vous pouvez donc ranger le reste de votre corps au placard vous n'en aurez pas besoin)
 
 ```
 IDE : 
@@ -47,7 +41,7 @@ suivre la procedure du cours / tuto
 Spring Tool Suite
 
 ```
-importer projet maven depuis la racine du repository cloné
+importer projet maven depuis la racine du repository local
 ```
 
 ### Lancement
@@ -76,5 +70,5 @@ Le résultat est cependant celui attendu donc soyez gentil s'il vous plait
 https://github.com/Bishem/mcommerce-config-repo.git
 ```
 ce n'est pas clientui qui gere expedition :
-- paiement la cree
-- commande la met a jour
+- paiement va creer l'expedition
+- commande va la mettre a jour
