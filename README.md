@@ -15,10 +15,9 @@ dans
 
 ### Prerequis
 
-- IDE
-- Java
-
-- des mains (vous pouvez donc ranger le reste de votre corps au placard vous n'en aurez pas besoin)
+- Un IDE
+- Une Version de Java
+- Des Mains (vous pouvez donc ranger le reste de votre corps au placard vous n'en aurez pas besoin)
 
 ```
 IDE : 
