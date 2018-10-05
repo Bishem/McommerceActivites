@@ -10,9 +10,6 @@ cloner le repository en local avec la commande :
 git clone https://github.com/Bishem/McommerceActivites.git
 ```
 
-dans 
-
-
 ### Prerequis
 
 - Un IDE
@@ -64,10 +61,14 @@ diffèrent du code initial (liste ci-dessous)
 
 Le résultat est cependant celui attendu donc soyez gentil s'il vous plait
 
+### Differences
+
 - les configs on toutes ete externalisees dans le repo de config suivant :
+
 ```
 https://github.com/Bishem/mcommerce-config-repo.git
 ```
 ce n'est pas clientui qui gere expedition :
+
 - paiement va creer l'expedition
 - commande va la mettre a jour
