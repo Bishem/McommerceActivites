@@ -11,7 +11,6 @@ import com.clientui.proxies.MicroserviceProduitsProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +31,7 @@ public class ClientController {
 
     @Autowired
     private MicroserviceProduitsProxy ProduitsProxy;
+
     @Autowired
     private MicroserviceCommandeProxy CommandesProxy;
 
@@ -107,6 +107,11 @@ public class ClientController {
         return "Confirmation";
     }
 
+    private Long numcarte() {
+
+        return ThreadLocalRandom.current().nextLong(1000000000000000L, 9000000000000000L);
+    }
+
     @GetMapping(value = "/suivi/{idCommande}/{montantCommande}")
     public String suivreExpedition(@PathVariable int idCommande, @PathVariable Double montantCommande, Model model) {
 
@@ -118,10 +123,5 @@ public class ClientController {
         model.addAttribute("montantCommande", montantCommande);
 
         return "Expedition";
-    }
-
-    private Long numcarte() {
-
-        return ThreadLocalRandom.current().nextLong(1000000000000000L, 9000000000000000L);
     }
 }

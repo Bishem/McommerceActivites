@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RibbonClient(name = "microservice-paiement")
 public interface MicroservicePaiementProxy {
 
-	@PostMapping(value = "/microservice-paiement/paiement")
-	ResponseEntity<PaiementBean> payerUneCommande(@RequestBody PaiementBean paiement);
+    @PostMapping(value = "/microservice-paiement/paiement")
+    ResponseEntity<PaiementBean> payerUneCommande(@RequestBody PaiementBean paiement);
 
 }

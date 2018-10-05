@@ -1,7 +1,6 @@
 package com.mproduits;
 
 import brave.sampler.Sampler;
-import com.mproduits.configurations.ApplicationPropertiesConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -13,14 +12,14 @@ import org.springframework.context.annotation.Bean;
 @EnableDiscoveryClient
 public class MproduitsApplication {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		SpringApplication.run(MproduitsApplication.class, args);
-	}
+        SpringApplication.run(MproduitsApplication.class, args);
+    }
 
-	@Bean
-	public Sampler defaultSampler() {
+    @Bean
+    public Sampler defaultSampler() {
 
-		return Sampler.ALWAYS_SAMPLE;
-	}
+        return Sampler.ALWAYS_SAMPLE;
+    }
 }

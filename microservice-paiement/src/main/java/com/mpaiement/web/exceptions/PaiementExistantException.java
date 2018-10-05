@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.CONFLICT)
 public class PaiementExistantException extends RuntimeException {
 
-	public PaiementExistantException(String message) {
+    public PaiementExistantException(String message) {
 
-		super(message);
-	}
+        super(message);
+    }
 }

@@ -1,21 +1,21 @@
 table td {
-	table-layout: fixed;
-	background-color: orange;
-	color: #333333;
-	font-weight: bold;
-	word-wrap: break-word;
-	vertical-align: top;
-	border: solid 1px #333333;
-	padding: 10px;
+    table-layout: fixed;
+    background-color: orange;
+    color: #333333;
+    font-weight: bold;
+    word-wrap: break-word;
+    vertical-align: top;
+    border: solid 1px #333333;
+    padding: 10px;
 }
 
 html body {
-	width: 800px;
-	background-color: #333333;
-	color: whitesmoke;
+    width: 800px;
+    background-color: #333333;
+    color: whitesmoke;
 }
 
 .trace {
-	background-color: darkred;
-	color: whitesmoke;
+    background-color: darkred;
+    color: whitesmoke;
 }

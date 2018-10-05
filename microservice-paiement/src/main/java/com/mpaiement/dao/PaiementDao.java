@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface PaiementDao extends JpaRepository<Paiement, Integer> {
 
-	Optional<Paiement> findByidCommande(int idCommande);
+    Optional<Paiement> findByidCommande(int idCommande);
 }

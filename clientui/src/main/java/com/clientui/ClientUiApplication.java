@@ -12,14 +12,14 @@ import org.springframework.context.annotation.Bean;
 @EnableDiscoveryClient
 public class ClientUiApplication {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		SpringApplication.run(ClientUiApplication.class, args);
-	}
+        SpringApplication.run(ClientUiApplication.class, args);
+    }
 
-	@Bean
-	public Sampler defaultSampler() {
+    @Bean
+    public Sampler defaultSampler() {
 
-		return Sampler.ALWAYS_SAMPLE;
-	}
+        return Sampler.ALWAYS_SAMPLE;
+    }
 }

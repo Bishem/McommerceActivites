@@ -15,9 +15,9 @@ import java.util.Optional;
 @RibbonClient(name = "microservice-commandes")
 public interface MicroserviceCommandeProxy {
 
-	@GetMapping(value = "/microservice-commandes/commandes/{id}")
-	Optional<CommandeBean> recupererUneCommande(@PathVariable("id") int id);
+    @GetMapping(value = "/microservice-commandes/commandes/{id}")
+    Optional<CommandeBean> recupererUneCommande(@PathVariable("id") int id);
 
-	@PostMapping(value = "/microservice-commandes/commandes")
-	ResponseEntity<CommandeBean> ajouterCommande(@RequestBody CommandeBean commande);
+    @PostMapping(value = "/microservice-commandes/commandes")
+    ResponseEntity<CommandeBean> ajouterCommande(@RequestBody CommandeBean commande);
 }

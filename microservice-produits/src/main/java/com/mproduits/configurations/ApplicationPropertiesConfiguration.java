@@ -1,23 +1,15 @@
 package com.mproduits.configurations;
 
-import org.springframework.beans.factory.annotation.Value;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties("mes-configs")
+@Getter
+@Setter
 public class ApplicationPropertiesConfiguration {
 
-	private int limitDeProduits;
-
-	public int getLimitDeProduits() {
-
-		return limitDeProduits;
-	}
-
-	public void setLimitDeProduits(int limitDeProduits) {
-
-		this.limitDeProduits = limitDeProduits;
-	}
+    private int limitDeProduits;
 }

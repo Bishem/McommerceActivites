@@ -8,85 +8,85 @@ import javax.persistence.Id;
 @Entity
 public class Product {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private String titre;
-	private String description;
-	private String image;
-	private Double prix;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String titre;
+    private String description;
+    private String image;
+    private Double prix;
 
-	public Product() {
+    public Product() {
 
-	}
+    }
 
-	public Product(String titre, String description, String image, Double prix) {
+    public Product(String titre, String description, String image, Double prix) {
 
-		this.titre = titre;
-		this.description = description;
-		this.image = image;
-		this.prix = prix;
-	}
+        this.titre = titre;
+        this.description = description;
+        this.image = image;
+        this.prix = prix;
+    }
 
-	public Integer getId() {
+    public Integer getId() {
 
-		return id;
-	}
+        return id;
+    }
 
-	public void setId(Integer id) {
+    public void setId(Integer id) {
 
-		this.id = id;
-	}
+        this.id = id;
+    }
 
-	public String getTitre() {
+    public String getTitre() {
 
-		return titre;
-	}
+        return titre;
+    }
 
-	public void setTitre(String titre) {
+    public void setTitre(String titre) {
 
-		this.titre = titre;
-	}
+        this.titre = titre;
+    }
 
-	public String getDescription() {
+    public String getDescription() {
 
-		return description;
-	}
+        return description;
+    }
 
-	public void setDescription(String description) {
+    public void setDescription(String description) {
 
-		this.description = description;
-	}
+        this.description = description;
+    }
 
-	public String getImage() {
+    public String getImage() {
 
-		return image;
-	}
+        return image;
+    }
 
-	public void setImage(String image) {
+    public void setImage(String image) {
 
-		this.image = image;
-	}
+        this.image = image;
+    }
 
-	public Double getPrix() {
+    public Double getPrix() {
 
-		return prix;
-	}
+        return prix;
+    }
 
-	public void setPrix(Double prix) {
+    public void setPrix(Double prix) {
 
-		this.prix = prix;
-	}
+        this.prix = prix;
+    }
 
-	@Override
-	public String toString() {
+    @Override
+    public String toString() {
 
-		return "Product{" +
-				"id=" + id +
-				", titre='" + titre + '\'' +
-				", description='" + description + '\'' +
-				", image='" + image + '\'' +
-				", prix=" + prix +
-				'}';
-	}
+        return "Product{" +
+                "id=" + id +
+                ", titre='" + titre + '\'' +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                ", prix=" + prix +
+                '}';
+    }
 }

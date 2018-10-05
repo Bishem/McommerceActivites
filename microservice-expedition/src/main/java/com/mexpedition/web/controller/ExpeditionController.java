@@ -1,6 +1,5 @@
 package com.mexpedition.web.controller;
 
-
 import com.mexpedition.dao.ExpeditionDao;
 import com.mexpedition.model.Expedition;
 import com.mexpedition.web.exceptions.ExpeditionNotFoundException;

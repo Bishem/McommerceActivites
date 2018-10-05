@@ -16,10 +16,10 @@
                         <span>Commande N° : <span th:text="${commande.id}" class="font-weight-bold"></span></span>
                     </p>
                     <div>
-                        Etat de la commande :<br />
-                        <span th:if="${expedition.etat} == 0" class="state">En Preparation</span><br />
-                        <span th:if="${expedition.etat} == 1" class="state">Expediée</span><br />
-                        <span th:if="${expedition.etat} == 2" class="state">Livrée</span><br />
+                        Etat de la commande :<br/>
+                        <span th:if="${expedition.etat} == 0" class="state">En Preparation</span><br/>
+                        <span th:if="${expedition.etat} == 1" class="state">Expediée</span><br/>
+                        <span th:if="${expedition.etat} == 2" class="state">Livrée</span><br/>
                     </div>
                     <div th:if="${expedition.etat} == 1">
                         <a th:href="@{|/|}" class="font-weight-bold">Retourner au menu principal</a>
