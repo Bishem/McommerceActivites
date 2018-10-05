@@ -68,7 +68,7 @@ dans ce cas, revener simplement en arriere, rafraichissez la page et reessayer
 vous pouvez egalement redemarrer les microservices 
 (plus lentement par contre, si vous pressez un citron plus vite il n'y aura pas plus de jus a l'arriver)
 
---parole d'un devellopeur non-agerie sur une technologie non-maitrisé ;-)
+-- parole d'un devellopeur non-aguerri sur une technologie non-maitrisé ;-)
 ```
 
 Vous aller très vite le voir certaines parties de l'application 
