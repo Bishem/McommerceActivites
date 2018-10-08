@@ -14,7 +14,11 @@ git clone https://github.com/Bishem/McommerceActivites.git
 
 - Un IDE
 - Une Version de Java
-- Des Mains (vous pouvez donc ranger le reste de votre corps au placard vous n'en aurez pas besoin)
+- Des Mains
+- Des Yeux
+
+(vous pouvez donc ranger le reste de votre corps au placard vous n'en aurez pas besoin pour le reste de ce projet)
+
 
 ```
 IDE : 
@@ -55,6 +59,19 @@ utiliser le boot dashboard (relativement similaire a IntelliJ)
 ```
 
 ## Informations Supplementaires
+
+Si vous apercevez une page d'erreur, ne vous inquietez pas,
+au demarrage l'application a tendence a avoir des rates
+
+```
+dans ce cas, revener simplement en arriere, rafraichissez la page et reessayer
+
+vous pouvez egalement redemarrer les microservices 
+(plus lentement par contre, si vous pressez un citron plus vite il n'y aura pas plus de jus a l'arriver,
+par contre votre citron sera bien defonce)
+
+-- parole d'un devellopeur non-aguerri sur une technologie non-maitrisé ;-)
+```
 
 Vous aller très vite le voir certaines parties de l'application 
 diffèrent du code initial (liste ci-dessous)
